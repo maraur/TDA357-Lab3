@@ -34,8 +34,8 @@ public class Game
         }
     }
 
-    String USERNAME = "USERNAME";
-    String PASSWORD = "PASSWORD";
+    String USERNAME = "TDA357_034";
+    String PASSWORD = "snhmhARa";
 
     /* Print command optionssetup.
     * /!\ you don't need to change this function! */
@@ -67,9 +67,15 @@ public class Game
       * for the given attributes.
       */
     void insertTown(Connection conn, String name, String country, String population) throws SQLException  {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+        conn.setAutoCommit(false);
+    	String query = "INSERT INTO towns VALUES (?,?,?)";
+    	PreparedStatement st = conn.prepareStatement(query);
+    	st.setString(1, name);
+    	st.setString(2, country);
+    	st.setString(3, poulation);
+    	st.executeUpdate();
+    	st.close();
+    	conn.commit();
     }
 
     /* Given a city name, country and population, this function
@@ -78,9 +84,15 @@ public class Game
       * The city visitbonus should be set to 0.
       */
     void insertCity(Connection conn, String name, String country, String population) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+    	conn.setAutoCommit(false);
+	    String query = "INSERT INTO cities VALUES (?,?,?)";
+	    PreparedStatement st = conn.prepareStatement(query);
+	    st.setString(1, name);
+	    st.setString(2, country);
+	    st.setString(3, poulation);
+	    st.executeUpdate();
+	    st.close();
+	    conn.commit();
     }
 
     /* Given two areas, this function
@@ -88,9 +100,16 @@ public class Game
       * between these two areas.
       */
     void insertRoad(Connection conn, String area1, String country1, String area2, String country2) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+    	conn.setAutoCommit(false);
+	    String query = "INSERT INTO roads VALUES (?,?,?,?)";
+	    PreparedStatement st = conn.prepareStatement(query);
+	    st.setString(1, area1);
+	    st.setString(2, country1);
+	    st.setString(3, area2);
+	    st.setString(4, country2);
+	    st.executeUpdate();
+	    st.close();
+	    conn.commit();
     }
 
     /* Given a player, this function
