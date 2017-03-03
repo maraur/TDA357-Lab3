@@ -34,7 +34,7 @@ public class Game
         }
     }
 
-    String USERNAME = "TDA357_034";
+    String USERNAME = "tda357_034";
     String PASSWORD = "snhmhARa";
 
     /* Print command optionssetup.
@@ -66,16 +66,16 @@ public class Game
       * should try to insert an area and a town (and possibly also a country)
       * for the given attributes.
       */
-    void insertTown(Connection conn, String name, String country, String population) throws SQLException  {
-    	insertCountry(country);
-    	insertArea(name, country, population);
+    void insertTown(Connection conn, String country, String name, String population) throws SQLException  {
+    	System.out.println("Inserting town"); //TODO remove
+    	insertCountry(conn, country);
+    	insertArea(conn, name, country, population);
     	conn.setAutoCommit(false);
-    	PreparedStatement st = "SELECT * FROM "      
-    	String query = "INSERT INTO towns VALUES (?,?,?)";
+    	String query = "INSERT INTO towns VALUES (?,?)";
+    	PreparedStatement st = conn.prepareStatement(query);     
     	st = conn.prepareStatement(query);
-    	st.setString(1, name);
-    	st.setString(2, country);
-    	st.setString(3, poulation);
+    	st.setString(1, country);
+    	st.setString(2, name);
     	st.executeUpdate();
     	st.close();
     	conn.commit();
@@ -86,15 +86,16 @@ public class Game
       * for the given attributes.
       * The city visitbonus should be set to 0.
       */
-    void insertCity(Connection conn, String name, String country, String population) throws SQLException {
-    	insertCountry(country);
-    	insertArea(name, country, population);
+    void insertCity(Connection conn, String country, String name, String population) throws SQLException {
+    	System.out.println("Inserting city"); //TODO remove
+    	insertCountry(conn, country);
+    	insertArea(conn, name, country, population);
     	conn.setAutoCommit(false);
 	    String query = "INSERT INTO cities VALUES (?,?,?)";
 	    PreparedStatement st = conn.prepareStatement(query);
-	    st.setString(1, name);
-	    st.setString(2, country);
-	    st.setString(3, poulation);
+	    st.setString(1, country);
+	    st.setString(2, name);
+	    st.setInt(3, 0);
 	    st.executeUpdate();
 	    st.close();
 	    conn.commit();
@@ -104,14 +105,16 @@ public class Game
      * 
      */
     void insertCountry(Connection conn, String name) throws SQLException {
+    	System.out.println("Inserting country"); //TODO remove
       	conn.setAutoCommit(false);
       	String query = "SELECT (EXISTS (SELECT * FROM countries WHERE name = ?))";
       	PreparedStatement st = conn.prepareStatement(query);
       	st.setString(1, name);
       	ResultSet rs = st.executeQuery();
-      	st.close();
       	conn.commit();
-      	if (rs.getBoolean(1)){
+      	rs.next();
+      	if (!rs.getBoolean(1)){
+          	st.close();
       		query = "INSERT INTO countries VALUES (?)";
       		st = conn.prepareStatement(query);
       		st.setString(1, name);
@@ -124,20 +127,22 @@ public class Game
      * 
      */
     void insertArea(Connection conn, String name, String country, String population) throws SQLException {
+    	System.out.println("Inserting area"); //TODO remove
     	conn.setAutoCommit(false);
       	String query = "SELECT (EXISTS (SELECT * FROM areas WHERE name = ? AND country = ?))";
       	PreparedStatement st = conn.prepareStatement(query);
       	st.setString(1, name);
       	st.setString(2, country);
       	ResultSet rs = st.executeQuery();
-      	st.close();
       	conn.commit();
-      	if (rs.getBoolean(1)){
+      	rs.next();
+      	if (!rs.getBoolean(1)){
+      		st.close();
       		query = "INSERT INTO areas VALUES (?,?,?)";
       		st = conn.prepareStatement(query);
-      		st.setString(1, name);
-      		st.setString(2, country);
-      		st.setString(3, population);
+      		st.setString(1, country);
+      		st.setString(2, name);
+      		st.setInt(3, Integer.parseInt(population));
       		st.executeUpdate();
       		st.close();
       		conn.commit();
@@ -148,17 +153,18 @@ public class Game
       * should try to insert a government owned road with tax 0
       * between these two areas.
       */
-    void insertRoad(Connection conn, String area1, String country1, String area2, String country2) throws SQLException {
+    void insertRoad(Connection conn, String country1, String area1, String country2, String area2) throws SQLException {
+    	System.out.println("Inserting road"); //TODO remove
     	conn.setAutoCommit(false);
 	    String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
 	    PreparedStatement st = conn.prepareStatement(query);
-	    st.setString(1, area1);
-	    st.setString(2, country1);
-	    st.setString(3, area2);
-	    st.setString(4, country2);
+	    st.setString(1, country1);
+	    st.setString(2, area1);
+	    st.setString(3, country2);
+	    st.setString(4, area2);
 	    st.setString(5, "");
 	    st.setString(6, "");
-	    st.setString(7, "0");
+	    st.setInt(7, 0);
 	    st.executeUpdate();
 	    st.close();
 	    conn.commit();
@@ -168,6 +174,7 @@ public class Game
      * should return the area name of the player's current location.
      */
     String getCurrentArea(Connection conn, Player person) throws SQLException {
+    	System.out.println("Getting area"); //TODO remove
     	conn.setAutoCommit(false);
       	String query = "SELECT locationarea FROM persons WHERE country = ? AND personnummer = ?";
       	PreparedStatement st = conn.prepareStatement(query);
@@ -183,6 +190,7 @@ public class Game
      * should return the country name of the player's current location.
      */
     String getCurrentCountry(Connection conn, Player person) throws SQLException {
+    	System.out.println("Getting country"); //TODO remove
     	conn.setAutoCommit(false);
       	String query = "SELECT locationcountry FROM persons WHERE country = ? AND personnummer = ?";
       	PreparedStatement st = conn.prepareStatement(query);
@@ -200,6 +208,7 @@ public class Game
       * The location should be random and the budget should be 1000.
      */
     int createPlayer(Connection conn, Player person) throws SQLException {
+    	System.out.println("Creating player"); //TODO remove
     	//make random area
     	try{
 	    	conn.setAutoCommit(false);
@@ -208,24 +217,25 @@ public class Game
 	      	ResultSet rs = st.executeQuery();
 	      	st.close();
 	      	conn.commit();
-	      	
 	      	rs.last();
 	      	double lastRow = rs.getRow();
-	    	int rand = (int)(Math.random() * lastRow);
+	    	int rand = (int)((Math.random() * lastRow) +1);
+	    	System.out.println("is this the problem?" + rand); //TODO remove
 	    	rs.absolute(rand);
+	    	System.out.println("NOPE!"); //TODO remove
 	    	String country = rs.getString(1);
 	    	String area = rs.getString(2);
 	    	
 	    	conn.setAutoCommit(false);
-	      	String query = "INSERT INTO persons VALUES (?,?,?,?,?,?)";
-	      	PreparedStatement st = conn.prepareStatement(query);
+	      	query = "INSERT INTO persons VALUES (?,?,?,?,?,?)";
+	      	st = conn.prepareStatement(query);
 	      	st.setString(1, person.country);
 	      	st.setString(2, person.personnummer);
 	      	st.setString(3, person.playername);
 	      	st.setString(4, country);
       		st.setString(5, area);
-      		st.setString(6, "1000");
-      		ResultSet rs = st.executeUpdate();
+      		st.setInt(6, 1000);
+      		st.executeUpdate();
       		st.close();
       		conn.commit();
       		return 1;
@@ -405,7 +415,7 @@ public class Game
                 statement = conn.prepareStatement("INSERT INTO Persons (country, personnummer, name, locationcountry, locationarea, budget) VALUES (?, ?, ?, ?, ?, cast(? as NUMERIC))");
                 statement.setString(1, "");
                 statement.setString(2, "");
-                statement.setString(3, "Government");
+                statement.setString(3, "The government");
                 statement.setString(4, "");
                 statement.setString(5, "");
                 statement.setString(6, "0");
@@ -578,7 +588,8 @@ public class Game
      * /!\ You don't need to change this function! */
     public static void main(String[] args) throws Exception
     {
-        String worldfile = args[0];
+        //System.out.println("At least we got here");
+    	String worldfile = args[0];
         Game g = new Game();
         g.play(worldfile);
     }
