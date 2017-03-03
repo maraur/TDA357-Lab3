@@ -168,29 +168,70 @@ public class Game
      * should return the area name of the player's current location.
      */
     String getCurrentArea(Connection conn, Player person) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+    	conn.setAutoCommit(false);
+      	String query = "SELECT locationarea FROM persons WHERE country = ? AND personnummer = ?";
+      	PreparedStatement st = conn.prepareStatement(query);
+      	st.setString(1, person.personnummer);
+      	st.setString(2, person.country);
+      	ResultSet rs = st.executeQuery();
+      	st.close();
+      	conn.commit();
+      	return rs.getString(1);
     }
 
     /* Given a player, this function
      * should return the country name of the player's current location.
      */
     String getCurrentCountry(Connection conn, Player person) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+    	conn.setAutoCommit(false);
+      	String query = "SELECT locationcountry FROM persons WHERE country = ? AND personnummer = ?";
+      	PreparedStatement st = conn.prepareStatement(query);
+      	st.setString(1, person.personnummer);
+      	st.setString(2, person.country);
+      	ResultSet rs = st.executeQuery();
+      	st.close();
+      	conn.commit();
+      	return rs.getString(1);
     }
 
     /* Given a player, this function
       * should try to insert a table entry in persons for this player
-     * and return 1 in case of a success and 0 otherwise.
+      * and return 1 in case of a success and 0 otherwise.
       * The location should be random and the budget should be 1000.
      */
     int createPlayer(Connection conn, Player person) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+    	//make random area
+    	try{
+	    	conn.setAutoCommit(false);
+	      	String query = "SELECT country, name FROM areas";
+	      	PreparedStatement st = conn.prepareStatement(query);
+	      	ResultSet rs = st.executeQuery();
+	      	st.close();
+	      	conn.commit();
+	      	
+	      	rs.last();
+	      	double lastRow = rs.getRow();
+	    	int rand = (int)(Math.random() * lastRow);
+	    	rs.absolute(rand);
+	    	String country = rs.getString(1);
+	    	String area = rs.getString(2);
+	    	
+	    	conn.setAutoCommit(false);
+	      	String query = "INSERT INTO persons VALUES (?,?,?,?,?,?)";
+	      	PreparedStatement st = conn.prepareStatement(query);
+	      	st.setString(1, person.country);
+	      	st.setString(2, person.personnummer);
+	      	st.setString(3, person.playername);
+	      	st.setString(4, country);
+      		st.setString(5, area);
+      		st.setString(6, "1000");
+      		ResultSet rs = st.executeUpdate();
+      		st.close();
+      		conn.commit();
+      		return 1;
+    	} catch (SQLException e) {
+    		return 0;
+    	}
     }
 
     /* Given a player and an area name and country name, this function
@@ -252,6 +293,7 @@ public class Game
         // TODO: Your implementation here
 
         // TODO TO HERE
+    	return 0;
     }
 
     /* Given a player and a city, this function
@@ -262,6 +304,7 @@ public class Game
         // TODO: Your implementation here
 
         // TODO TO HERE
+    	return 0;
     }
 
     /* Given a player, a from area and a to area, this function
@@ -272,6 +315,7 @@ public class Game
         // TODO: Your implementation here
 
         // TODO TO HERE
+    	return 0;
     }
 
     /* Given a player and a city, this function
@@ -282,6 +326,7 @@ public class Game
         // TODO: Your implementation here
 
         // TODO TO HERE
+    	return 0;
     }
 
     /* Given a player and a new location, this function
@@ -292,6 +337,7 @@ public class Game
         // TODO: Your implementation here
 
         // TODO TO HERE
+    	return 0;
     }
 
     /* This function should add the visitbonus of 1000 to a random city
