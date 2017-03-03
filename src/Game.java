@@ -67,9 +67,12 @@ public class Game
       * for the given attributes.
       */
     void insertTown(Connection conn, String name, String country, String population) throws SQLException  {
-        conn.setAutoCommit(false);
+    	insertCountry(country);
+    	insertArea(name, country, population);
+    	conn.setAutoCommit(false);
+    	PreparedStatement st = "SELECT * FROM "      
     	String query = "INSERT INTO towns VALUES (?,?,?)";
-    	PreparedStatement st = conn.prepareStatement(query);
+    	st = conn.prepareStatement(query);
     	st.setString(1, name);
     	st.setString(2, country);
     	st.setString(3, poulation);
@@ -84,6 +87,8 @@ public class Game
       * The city visitbonus should be set to 0.
       */
     void insertCity(Connection conn, String name, String country, String population) throws SQLException {
+    	insertCountry(country);
+    	insertArea(name, country, population);
     	conn.setAutoCommit(false);
 	    String query = "INSERT INTO cities VALUES (?,?,?)";
 	    PreparedStatement st = conn.prepareStatement(query);
@@ -94,19 +99,66 @@ public class Game
 	    st.close();
 	    conn.commit();
     }
-
+    
+    /* Given a country name, tries to insert a country of that name
+     * 
+     */
+    void insertCountry(Connection conn, String name) throws SQLException {
+      	conn.setAutoCommit(false);
+      	String query = "SELECT (EXISTS (SELECT * FROM countries WHERE name = ?))";
+      	PreparedStatement st = conn.prepareStatement(query);
+      	st.setString(1, name);
+      	ResultSet rs = st.executeQuery();
+      	st.close();
+      	conn.commit();
+      	if (rs.getBoolean(1)){
+      		query = "INSERT INTO countries VALUES (?)";
+      		st = conn.prepareStatement(query);
+      		st.setString(1, name);
+      		st.executeUpdate();
+      		st.close();
+      		conn.commit();
+      	}
+    }
+    /* Given a country name, tries to insert a country of that name
+     * 
+     */
+    void insertArea(Connection conn, String name, String country, String population) throws SQLException {
+    	conn.setAutoCommit(false);
+      	String query = "SELECT (EXISTS (SELECT * FROM areas WHERE name = ? AND country = ?))";
+      	PreparedStatement st = conn.prepareStatement(query);
+      	st.setString(1, name);
+      	st.setString(2, country);
+      	ResultSet rs = st.executeQuery();
+      	st.close();
+      	conn.commit();
+      	if (rs.getBoolean(1)){
+      		query = "INSERT INTO areas VALUES (?,?,?)";
+      		st = conn.prepareStatement(query);
+      		st.setString(1, name);
+      		st.setString(2, country);
+      		st.setString(3, population);
+      		st.executeUpdate();
+      		st.close();
+      		conn.commit();
+      	}
+    }
+    
     /* Given two areas, this function
       * should try to insert a government owned road with tax 0
       * between these two areas.
       */
     void insertRoad(Connection conn, String area1, String country1, String area2, String country2) throws SQLException {
     	conn.setAutoCommit(false);
-	    String query = "INSERT INTO roads VALUES (?,?,?,?)";
+	    String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
 	    PreparedStatement st = conn.prepareStatement(query);
 	    st.setString(1, area1);
 	    st.setString(2, country1);
 	    st.setString(3, area2);
 	    st.setString(4, country2);
+	    st.setString(5, "");
+	    st.setString(6, "");
+	    st.setString(7, "0");
 	    st.executeUpdate();
 	    st.close();
 	    conn.commit();
