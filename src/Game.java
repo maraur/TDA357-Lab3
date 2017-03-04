@@ -219,7 +219,7 @@ public class Game
 	      	conn.commit();
 	      	rs.last();
 	      	double lastRow = rs.getRow();
-	    	int rand = (int)((Math.random() * lastRow) +1);
+	    	int rand = (int)((Math.random() * lastRow) + 1);
 	    	rs.absolute(rand);
 	    	String country = rs.getString(1);
 	    	String area = rs.getString(2);
@@ -464,8 +464,8 @@ public class Game
                 String mode = readLine("? > ");
                 String[] cmd = mode.split(" +");
                 cmd[0] = cmd[0].toLowerCase();
-                if ("new player".startsWith(cmd[0]) && (cmd.length == 5)) {
-                    Player nextplayer = new Player(cmd[1], cmd[2], cmd[3], cmd[4]);
+                if ("new player".startsWith(cmd[0]) && (cmd.length == 4)) {
+                    Player nextplayer = new Player(cmd[1], cmd[2], cmd[3], "Given later");
                     if (createPlayer(conn, nextplayer) == 1) {
                         players.add(nextplayer);
                     }
