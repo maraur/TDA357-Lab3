@@ -299,13 +299,15 @@ public class Game
         String query = "SELECT * FROM assetsummary WHERE country <> '' AND personnummer <> ''";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet rs = st.executeQuery();
-        st.close();
         conn.commit();
         while(rs.next()){
             System.out.println("Player with personnummer: " + rs.getString("personnummer")
-             + " from country = " + rs.getString("country") + "has: \n budget:" + rs.getDouble("budget")
-             + " | assets: " + rs.getString("assets") + " | refund value: " + rs.getDouble("reclaimable\n"));
+                    + " from country = " + rs.getString("country")
+                    + " has: \n budget: " + rs.getDouble("budget")
+                    + " | assets: " + rs.getString("assets") + " | refund value: "
+                    + rs.getDouble("reclaimable") + "\n");
         }
+        st.close();
     }
 
     /* Given a player, a from area and a to area, this function
