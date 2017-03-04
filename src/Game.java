@@ -179,12 +179,14 @@ public class Game
     	conn.setAutoCommit(false);
       	String query = "SELECT locationarea FROM persons WHERE country = ? AND personnummer = ?";
       	PreparedStatement st = conn.prepareStatement(query);
-      	st.setString(1, person.personnummer);
-      	st.setString(2, person.country);
+      	st.setString(1, person.country);
+      	st.setString(2, person.personnummer);
       	ResultSet rs = st.executeQuery();
-      	st.close();
       	conn.commit();
-      	return rs.getString(1);
+      	rs.next();
+      	String currentArea = rs.getString("locationarea");
+      	st.close();
+      	return currentArea;
     }
 
     /* Given a player, this function
@@ -195,12 +197,14 @@ public class Game
     	conn.setAutoCommit(false);
       	String query = "SELECT locationcountry FROM persons WHERE country = ? AND personnummer = ?";
       	PreparedStatement st = conn.prepareStatement(query);
-      	st.setString(1, person.personnummer);
-      	st.setString(2, person.country);
+      	st.setString(1, person.country);
+      	st.setString(2, person.personnummer);
       	ResultSet rs = st.executeQuery();
-      	st.close();
-      	conn.commit();
-      	return rs.getString(1);
+        conn.commit();
+        rs.next();
+      	String currentCountry = rs.getString(1);
+        st.close();
+      	return currentCountry;
     }
 
     /* Given a player, this function
