@@ -370,22 +370,52 @@ public class Game
      * should try to buy a road between these areas owned by the player
      * and return 1 in case of a success and 0 otherwise.
      */
-    int buyRoad(Connection conn, Player person, String area1, String country1, String area2, String country2) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
-    	return 0;
+    int buyRoad(Connection conn, Player person, String area1, String country1, String area2, String country2) {
+        try {
+            System.out.println("Buying road"); //TODO remove
+            conn.setAutoCommit(false);
+            String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, country1);
+            st.setString(2, area1);
+            st.setString(3, country2);
+            st.setString(4, area2);
+            st.setString(5, person.country);
+            st.setString(6, person.personnummer);
+            st.setDouble(7, 13.5); //TODO what is the roadtax supposed to be even?
+            st.executeUpdate();
+            conn.commit();
+            st.close();
+            return 1;
+        }catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 
     /* Given a player and a city, this function
      * should try to buy a hotel in this city owned by the player
      * and return 1 in case of a success and 0 otherwise.
      */
-    int buyHotel(Connection conn, Player person, String name, String city, String country) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
-    	return 0;
+    int buyHotel(Connection conn, Player person, String name, String city, String country){
+        try {
+            System.out.println("Buying hotel"); //TODO remove
+            conn.setAutoCommit(false);
+            String query = "INSERT INTO hotels VALUES (?,?,?,?,?)";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, name);
+            st.setString(2, country);
+            st.setString(3, city);
+            st.setString(4, person.country);
+            st.setString(5, person.personnummer);
+            st.executeUpdate();
+            conn.commit();
+            st.close();
+            return 1;
+        }catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 
     /* Given a player and a new location, this function
