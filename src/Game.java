@@ -242,7 +242,7 @@ public class Game
       		conn.commit();
       		return 1;
     	} catch (SQLException e) {
-    	    System.out.println(e);
+    	    System.out.println(e); //TODO (maybe) REMOVE
     		return 0;
     	}
     }
@@ -274,20 +274,54 @@ public class Game
      * should list all properties (roads and hotels) of the person
      * that is identified by the tuple of personnummer and country.
      */
-    void listProperties(Connection conn, String personnummer, String country) {
-        // TODO: Your implementation here
+    void listProperties(Connection conn, String personnummer, String country) throws SQLException {
+        System.out.println("Listing properties"); // TODO REMOVE
+        conn.setAutoCommit(false);
+        String query = "SELECT * FROM hotels WHERE ownercountry = ? AND ownerpersonnummer = ?";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setString(1,country);
+        st.setString(2,personnummer);
+        ResultSet rs = st.executeQuery();
+        conn.commit();
+        if(!rs.next()){
+            System.out.println("Player with personnummer: " + personnummer
+                    + " from country: " + country + " owns no hotels.");
+        }else {
+            System.out.println("Player with personnummer: " + personnummer
+                    + " from country: " + country + " owns the following hotels:");
+            do {
+                System.out.println(rs.getString("name") + " in "
+                        + rs.getString("locationcountry")
+                        + ", " + rs.getString("locationname"));
+            } while (rs.next());
+        }
+        st.close();
 
-        // TODO TO HERE
+        query = "SELECT * FROM roads WHERE ownercountry = ? AND ownerpersonnummer = ?";
+        st = conn.prepareStatement(query);
+        st.setString(1,country);
+        st.setString(2,personnummer);
+        rs = st.executeQuery();
+        conn.commit();
+        if(!rs.next()){
+            System.out.println("Player owns no roads");
+        }else {
+            System.out.println("And the following roads:");
+            do {
+                System.out.println("from: " + rs.getString("fromcountry") + ", "
+                        + rs.getString("fromarea") + "to: "
+                        + rs.getString("tocountry") + ", " + rs.getString("toarea")
+                        + "with roadtax: " + rs.getString("roadtax"));
+            }while (rs.next());
+        }
+        st.close();
     }
 
     /* Given a player, this function
      * should list all properties of the player.
      */
     void listProperties(Connection conn, Player person) throws SQLException {
-        // TODO: Your implementation here
-        // hint: Use your implementation of the overlaoded listProperties function
-
-        // TODO TO HERE
+        listProperties(conn, person.personnummer, person.country);
     }
 
     /* This function should print the budget, assets and refund values for all players.
