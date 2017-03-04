@@ -207,6 +207,23 @@ public class Game
       	return currentCountry;
     }
 
+    String[] getRandomCountryArea(Connection conn) throws SQLException {
+        String[] countryArea = new String[2];
+        String query = "SELECT country, name FROM areas WHERE country <> '' AND name <> ''";
+        PreparedStatement st = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = st.executeQuery();
+        conn.commit();
+        rs.last();
+        double lastRow = rs.getRow();
+        int rand = (int)((Math.random() * lastRow) + 1);
+        rs.absolute(rand);
+        countryArea[0] = rs.getString("country");
+        countryArea[1] = rs.getString("name");
+        st.close();
+        return countryArea;
+    }
+
     /* Given a player, this function
       * should try to insert a table entry in persons for this player
       * and return 1 in case of a success and 0 otherwise.
@@ -215,27 +232,15 @@ public class Game
     int createPlayer(Connection conn, Player person) throws SQLException {
     	System.out.println("Creating player"); //TODO remove
     	try{
+    	    String[] countryArea = getRandomCountryArea(conn);
 	    	conn.setAutoCommit(false);
-	      	String query = "SELECT country, name FROM areas";
-	      	PreparedStatement st = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-	      	ResultSet rs = st.executeQuery();
-	      	conn.commit();
-	      	rs.last();
-	      	double lastRow = rs.getRow();
-	    	int rand = (int)((Math.random() * lastRow) + 1);
-	    	rs.absolute(rand);
-	    	String country = rs.getString(1);
-	    	String area = rs.getString(2);
-            st.close();
-	    	conn.setAutoCommit(false);
-	      	query = "INSERT INTO persons VALUES (?,?,?,?,?,?)";
-	      	st = conn.prepareStatement(query);
+            String query = "INSERT INTO persons VALUES (?,?,?,?,?,?)";
+            PreparedStatement st = conn.prepareStatement(query);
 	      	st.setString(1, person.country);
 	      	st.setString(2, person.personnummer);
 	      	st.setString(3, person.playername);
-	      	st.setString(4, country);
-      		st.setString(5, area);
+	      	st.setString(4, countryArea[0]);
+      		st.setString(5, countryArea[1]);
       		st.setInt(6, 1000);
       		st.executeUpdate();
       		st.close();
@@ -288,7 +293,7 @@ public class Game
                     + " from country: " + country + " owns no hotels.");
         }else {
             System.out.println("Player with personnummer: " + personnummer
-                    + " from country: " + country + " owns the following hotels:");
+                    + " from country: " + country + " owns the following hotels: ");
             do {
                 System.out.println(rs.getString("name") + " in "
                         + rs.getString("locationcountry")
@@ -309,9 +314,9 @@ public class Game
             System.out.println("And the following roads:");
             do {
                 System.out.println("from: " + rs.getString("fromcountry") + ", "
-                        + rs.getString("fromarea") + "to: "
+                        + rs.getString("fromarea") + " to: "
                         + rs.getString("tocountry") + ", " + rs.getString("toarea")
-                        + "with roadtax: " + rs.getString("roadtax"));
+                        + " with roadtax: " + rs.getString("roadtax"));
             }while (rs.next());
         }
         st.close();
@@ -423,18 +428,39 @@ public class Game
      * and return 1 in case of a success and 0 otherwise.
      */
     int changeLocation(Connection conn, Player person, String area, String country) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
-    	return 0;
+        try {
+            System.out.println("Moving person"); //TODO remove
+            conn.setAutoCommit(false);
+            String query = "UPDATE persons SET locationarea = ?, locationcountry = ? WHERE country = ? AND personnummer = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, area);
+            st.setString(2, country);
+            st.setString(3, person.country);
+            st.setString(4, person.personnummer);
+            st.executeUpdate();
+            conn.commit();
+            st.close();
+            return 1;
+        }catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 
     /* This function should add the visitbonus of 1000 to a random city
       */
     void setVisitingBonus(Connection conn) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+        System.out.println("Setting visitbonus"); //TODO remove
+        String[] countryArea = getRandomCountryArea(conn);
+        conn.setAutoCommit(false);
+        String query = "UPDATE cities SET visitbonus = ? WHERE country = ? AND name = ?";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setInt(1, 1000);
+        st.setString(2, countryArea[0]);
+        st.setString(3, countryArea[1]);
+        st.executeUpdate();
+        conn.commit();
+        st.close();
     }
 
     /* This function should print the winner of the game based on the currently highest budget.
