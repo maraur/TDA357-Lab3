@@ -353,22 +353,50 @@ public class Game
      * should try to sell the road between these areas owned by the player
      * and return 1 in case of a success and 0 otherwise.
      */
-    int sellRoad(Connection conn, Player person, String area1, String country1, String area2, String country2) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
-    	return 0;
+    int sellRoad(Connection conn, Player person, String area1, String country1, String area2, String country2){
+        try {
+            System.out.println("Selling road"); //TODO remove
+            conn.setAutoCommit(false);
+            String query = "DELETE FROM roads WHERE fromcountry = ? AND fromarea = ? AND tocountry = ? AND toarea = ? AND ownercountry = ? AND ownerpersonnummer = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, country1);
+            st.setString(2, area1);
+            st.setString(3, country2);
+            st.setString(4, area2);
+            st.setString(5, person.country);
+            st.setString(6, person.personnummer);
+            st.executeUpdate();
+            conn.commit();
+            st.close();
+            return 1;
+        }catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 
     /* Given a player and a city, this function
      * should try to sell the hotel in this city owned by the player
      * and return 1 in case of a success and 0 otherwise.
      */
-    int sellHotel(Connection conn, Player person, String city, String country) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
-    	return 0;
+    int sellHotel(Connection conn, Player person, String city, String country){
+        try {
+            System.out.println("Selling hotel"); //TODO remove
+            conn.setAutoCommit(false);
+            String query = "DELETE FROM hotels WHERE ownercountry = ? AND ownerpersonnummer = ? AND locationcountry = ? AND locationname = ?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, person.country);
+            st.setString(2, person.personnummer);
+            st.setString(3, country);
+            st.setString(4, city);
+            st.executeUpdate();
+            conn.commit();
+            st.close();
+            return 1;
+        }catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 
     /* Given a player, a from area and a to area, this function
