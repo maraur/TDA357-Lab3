@@ -400,6 +400,10 @@ public class Game
 
             final Connection conn = DriverManager.getConnection(url, props);
 
+
+            //TODO REMOVE! ONLY FOR TESTING!
+            clearOldTable(conn);
+
 			/* This block creates the government entry and the necessary
 			 * country and area for that.
 			 */
@@ -588,9 +592,19 @@ public class Game
      * /!\ You don't need to change this function! */
     public static void main(String[] args) throws Exception
     {
-        //clear table
     	String worldfile = args[0];
         Game g = new Game();
         g.play(worldfile);
+    }
+
+
+    //TODO REMOVE, only for debug
+    void clearOldTable(Connection conn) throws  SQLException{
+        conn.setAutoCommit(false);
+        String query = "TRUNCATE countries CASCADE";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+        st.close();
+        conn.commit();
     }
 }
