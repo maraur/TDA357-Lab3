@@ -7,6 +7,8 @@
  * 3) Implement the three functions showPossibleMoves, showPlayerAssets
  *    and showScores.
  */
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*; // JDBC stuff.
@@ -72,8 +74,7 @@ public class Game
     	insertArea(conn, name, country, population);
     	conn.setAutoCommit(false);
     	String query = "INSERT INTO towns VALUES (?,?)";
-    	PreparedStatement st = conn.prepareStatement(query);     
-    	st = conn.prepareStatement(query);
+    	PreparedStatement st = conn.prepareStatement(query);
     	st.setString(1, country);
     	st.setString(2, name);
     	st.executeUpdate();
@@ -209,23 +210,20 @@ public class Game
      */
     int createPlayer(Connection conn, Player person) throws SQLException {
     	System.out.println("Creating player"); //TODO remove
-    	//make random area
     	try{
 	    	conn.setAutoCommit(false);
 	      	String query = "SELECT country, name FROM areas";
-	      	PreparedStatement st = conn.prepareStatement(query);
+	      	PreparedStatement st = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
 	      	ResultSet rs = st.executeQuery();
-	      	st.close();
 	      	conn.commit();
 	      	rs.last();
 	      	double lastRow = rs.getRow();
 	    	int rand = (int)((Math.random() * lastRow) +1);
-	    	System.out.println("is this the problem?" + rand); //TODO remove
 	    	rs.absolute(rand);
-	    	System.out.println("NOPE!"); //TODO remove
 	    	String country = rs.getString(1);
 	    	String area = rs.getString(2);
-	    	
+            st.close();
 	    	conn.setAutoCommit(false);
 	      	query = "INSERT INTO persons VALUES (?,?,?,?,?,?)";
 	      	st = conn.prepareStatement(query);
@@ -240,12 +238,13 @@ public class Game
       		conn.commit();
       		return 1;
     	} catch (SQLException e) {
+    	    System.out.println(e);
     		return 0;
     	}
     }
 
     /* Given a player and an area name and country name, this function
-     * sould show all directly-reachable destinations for the player from the
+     * should show all directly-reachable destinations for the player from the
      * area from the arguments.
      * The output should include area names, country names and the associated road-taxes
       */
@@ -256,7 +255,7 @@ public class Game
     }
 
     /* Given a player, this function
-       * sould show all directly-reachable destinations for the player from
+     * should show all directly-reachable destinations for the player from
      * the player's current location.
      * The output should include area names, country names and the associated road-taxes
      */
@@ -290,9 +289,19 @@ public class Game
     /* This function should print the budget, assets and refund values for all players.
      */
     void showScores(Connection conn) throws SQLException {
-        // TODO: Your implementation here
-
-        // TODO TO HERE
+        //Not sure if it's better to make one query per player or sorting on the java-side
+        System.out.println("Showing scores"); //TODO remove
+        conn.setAutoCommit(false);
+        String query = "SELECT * FROM assetsummary WHERE country <> '' AND personnummer <> ''";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet rs = st.executeQuery();
+        st.close();
+        conn.commit();
+        while(rs.next()){
+            System.out.println("Player with personnummer: " + rs.getString("personnummer")
+             + " from country = " + rs.getString("country") + "has: \n budget:" + rs.getDouble("budget")
+             + " | assets: " + rs.getString("assets") + " | refund value: " + rs.getDouble("reclaimable\n"));
+        }
     }
 
     /* Given a player, a from area and a to area, this function
