@@ -269,10 +269,18 @@ public class Game
      * The output should include area names, country names and the associated road-taxes
      */
     void getNextMoves(Connection conn, Player person) throws SQLException {
-        // TODO: Your implementation here
-        // hint: Use your implementation of the overloaded getNextMoves function
-
-        // TODO TO HERE
+        conn.setAutoCommit(false);
+        String query = "SELECT locationcountry, locationarea FROM persons WHERE country = ? AND personnummer = ?";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setString(1,person.country);
+        st.setString(2,person.personnummer);
+        ResultSet rs = st.executeQuery();
+        conn.commit();
+        rs.next();
+        String locationArea = rs.getString("locationarea");
+        String locationcountry = rs.getString("locationcountry");
+        st.close();
+        getNextMoves(conn, person, locationArea, locationcountry);
     }
 
     /* Given a personnummer and a country, this function
