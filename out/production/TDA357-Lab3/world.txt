@@ -1,0 +1,14 @@
+CITY Sweden Malmo 300000
+CITY Sweden Gothenburg 500000
+CITY Sweden Jonkoping 80000
+CITY Sweden Stockholm 1000000
+TOWN Sweden Lulea 50
+
+ROAD Sweden Malmo Sweden Gothenburg
+ROAD Sweden Malmo Sweden Jonkoping
+ROAD Sweden Stockholm Sweden Gothenburg
+ROAD Sweden Gothenburg Sweden Jonkoping
+ROAD Sweden Jonkoping Sweden Stockholm
+ROAD Sweden Stockholm Sweden Lulea
+
+

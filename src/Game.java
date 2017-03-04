@@ -588,7 +588,7 @@ public class Game
      * /!\ You don't need to change this function! */
     public static void main(String[] args) throws Exception
     {
-        //System.out.println("At least we got here");
+        //clear table
     	String worldfile = args[0];
         Game g = new Game();
         g.play(worldfile);
