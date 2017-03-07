@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c4f8a51-9ecb-4641-ac8b-0c5ead1ac2d8" name="Default" comment="" />
+    <list default="true" id="4c4f8a51-9ecb-4641-ac8b-0c5ead1ac2d8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hand-in/Game.java" afterPath="$PROJECT_DIR$/hand-in/Game.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.java" afterPath="$PROJECT_DIR$/src/Game.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,12 +25,12 @@
       <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="633">
-              <caret line="174" column="7" lean-forward="true" selection-start-line="174" selection-start-column="7" selection-end-line="174" selection-end-column="7" />
+            <state relative-caret-position="549">
+              <caret line="385" column="20" lean-forward="false" selection-start-line="385" selection-start-column="20" selection-end-line="385" selection-end-column="20" />
               <folding>
                 <element signature="e#1238#1239#0" expanded="true" />
                 <element signature="e#1281#1282#0" expanded="true" />
-                <element signature="e#24907#24915#0" expanded="true" />
+                <element signature="e#25289#25297#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,6 +48,7 @@
       <find>b</find>
       <find>b[uy]</find>
       <find>listproperties</find>
+      <find>name</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -382,7 +386,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="2578" height="1408" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -391,9 +395,9 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968238" sideWeight="0.5020986" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29819041" sideWeight="0.5035156" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29819041" sideWeight="0.49790135" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29819041" sideWeight="0.49648437" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -435,7 +439,7 @@
           <folding>
             <element signature="e#1238#1239#0" expanded="true" />
             <element signature="e#1281#1282#0" expanded="true" />
-            <element signature="e#24907#24915#0" expanded="true" />
+            <element signature="e#25289#25297#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -447,7 +451,7 @@
           <folding>
             <element signature="e#1238#1239#0" expanded="true" />
             <element signature="e#1281#1282#0" expanded="true" />
-            <element signature="e#24907#24915#0" expanded="true" />
+            <element signature="e#25289#25297#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -459,7 +463,7 @@
           <folding>
             <element signature="e#1238#1239#0" expanded="true" />
             <element signature="e#1281#1282#0" expanded="true" />
-            <element signature="e#24907#24915#0" expanded="true" />
+            <element signature="e#25289#25297#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -471,7 +475,7 @@
           <folding>
             <element signature="e#1238#1239#0" expanded="true" />
             <element signature="e#1281#1282#0" expanded="true" />
-            <element signature="e#24907#24915#0" expanded="true" />
+            <element signature="e#25289#25297#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -483,19 +487,19 @@
           <folding>
             <element signature="e#1238#1239#0" expanded="true" />
             <element signature="e#1281#1282#0" expanded="true" />
-            <element signature="e#24907#24915#0" expanded="true" />
+            <element signature="e#25289#25297#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="633">
-          <caret line="174" column="7" lean-forward="true" selection-start-line="174" selection-start-column="7" selection-end-line="174" selection-end-column="7" />
+        <state relative-caret-position="549">
+          <caret line="385" column="20" lean-forward="false" selection-start-line="385" selection-start-column="20" selection-end-line="385" selection-end-column="20" />
           <folding>
             <element signature="e#1238#1239#0" expanded="true" />
             <element signature="e#1281#1282#0" expanded="true" />
-            <element signature="e#24907#24915#0" expanded="true" />
+            <element signature="e#25289#25297#0" expanded="true" />
           </folding>
         </state>
       </provider>

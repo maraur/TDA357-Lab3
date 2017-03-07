@@ -89,7 +89,7 @@ public class Game {
       * for the given attributes.
       * The city visitbonus should be set to 0.
       */
-    void insertCity(Connection conn, String name,  String country, String population) throws SQLException {
+    void insertCity(Connection conn, String name, String country, String population) throws SQLException {
         insertCountry(conn, country);
         insertArea(conn, name, country, population);
         conn.setAutoCommit(false);
@@ -373,15 +373,22 @@ public class Game {
      */
     void showScores(Connection conn) throws SQLException {
         conn.setAutoCommit(false);
-        String query = "SELECT name, budget, assets, reclaimable FROM assetsummary WHERE country <> '' AND personnummer <> ''";
+        String query = "SELECT * FROM assetsummary WHERE country <> '' AND personnummer <> ''";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet rs = st.executeQuery();
         conn.commit();
         while(rs.next()){
-            System.out.println(rs.getString("personnummer")
+            String playerQuery = "SELECT name FROM persons WHERE personnummer = ? AND country = ?";
+            PreparedStatement playerSt = conn.prepareStatement(playerQuery);
+            playerSt.setString(1,rs.getString("personnummer"));
+            playerSt.setString(2,rs.getString("country"));
+            ResultSet playerRS = playerSt.executeQuery();
+            playerRS.next();
+            System.out.println(playerRS.getString("name")
                     + " has: \n budget: " + rs.getDouble("budget")
                     + " | assets: " + rs.getString("assets") + " | refund value: "
                     + rs.getDouble("reclaimable") + "\n");
+            playerSt.close();
         }
         st.close();
     }
