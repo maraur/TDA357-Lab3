@@ -384,7 +384,8 @@ public class Game {
             playerSt.setString(2,rs.getString("country"));
             ResultSet playerRS = playerSt.executeQuery();
             playerRS.next();
-            System.out.println(playerRS.getString("name")
+            System.out.println(playerRS.getString("name") + "(personummer: "
+                    + rs.getString("personnummer") + ", country: " + rs.getString("country") + ")"
                     + " has: \n budget: " + rs.getDouble("budget")
                     + " | assets: " + rs.getString("assets") + " | refund value: "
                     + rs.getDouble("reclaimable") + "\n");
