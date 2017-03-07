@@ -453,8 +453,9 @@ public class Game {
     int buyRoad(Connection conn, Player person, String area1, String country1, String area2, String country2) throws SQLException {
         String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
         PreparedStatement st = conn.prepareStatement(query);
-        String roadTaxQuery = "SELECT value FROM constants WHERE name = roadtax";
+        String roadTaxQuery = "SELECT value FROM constants WHERE name = ?";
         PreparedStatement roadTaxSt = conn.prepareStatement(roadTaxQuery);
+        roadTaxSt.setString(1,"roadtax");
         try {
             conn.setAutoCommit(false);
 
