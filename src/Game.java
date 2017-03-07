@@ -35,8 +35,10 @@ public class Game {
         }
     }
 
-    String USERNAME = "tda357_034";
-    String PASSWORD = "snhmhARa";
+    //String USERNAME = "tda357_034";
+    //String PASSWORD = "snhmhARa";
+    String USERNAME = "SECRET";
+    String PASSWORD = "SECRET";
 
     /* Print command optionssetup.
     * /!\ you don't need to change this function! */
@@ -68,7 +70,6 @@ public class Game {
       * for the given attributes.
       */
     void insertTown(Connection conn, String country, String name, String population) throws SQLException {
-        System.out.println("Inserting town"); //TODO remove
         insertCountry(conn, country);
         insertArea(conn, name, country, population);
         conn.setAutoCommit(false);
@@ -87,7 +88,6 @@ public class Game {
       * The city visitbonus should be set to 0.
       */
     void insertCity(Connection conn, String country, String name, String population) throws SQLException {
-        System.out.println("Inserting city"); //TODO remove
         insertCountry(conn, country);
         insertArea(conn, name, country, population);
         conn.setAutoCommit(false);
@@ -105,7 +105,6 @@ public class Game {
      * 
      */
     void insertCountry(Connection conn, String name) throws SQLException {
-        System.out.println("Inserting country"); //TODO remove
         conn.setAutoCommit(false);
         String query = "SELECT (EXISTS (SELECT * FROM countries WHERE name = ?))";
         PreparedStatement st = conn.prepareStatement(query);
@@ -128,7 +127,6 @@ public class Game {
      * 
      */
     void insertArea(Connection conn, String name, String country, String population) throws SQLException {
-        System.out.println("Inserting area"); //TODO remove
         conn.setAutoCommit(false);
         String query = "SELECT (EXISTS (SELECT * FROM areas WHERE name = ? AND country = ?))";
         PreparedStatement st = conn.prepareStatement(query);
@@ -155,7 +153,6 @@ public class Game {
       * between these two areas.
       */
     void insertRoad(Connection conn, String country1, String area1, String country2, String area2) throws SQLException {
-        System.out.println("Inserting road"); //TODO remove
         conn.setAutoCommit(false);
         String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
         PreparedStatement st = conn.prepareStatement(query);
@@ -175,7 +172,6 @@ public class Game {
      * should return the area name of the player's current location.
      */
     String getCurrentArea(Connection conn, Player person) throws SQLException {
-        System.out.println("Getting area"); //TODO remove
         conn.setAutoCommit(false);
         String query = "SELECT locationarea FROM persons WHERE country = ? AND personnummer = ?";
         PreparedStatement st = conn.prepareStatement(query);
@@ -193,7 +189,6 @@ public class Game {
      * should return the country name of the player's current location.
      */
     String getCurrentCountry(Connection conn, Player person) throws SQLException {
-        System.out.println("Getting country"); //TODO remove
         conn.setAutoCommit(false);
         String query = "SELECT locationcountry FROM persons WHERE country = ? AND personnummer = ?";
         PreparedStatement st = conn.prepareStatement(query);
@@ -230,7 +225,6 @@ public class Game {
       * The location should be random and the budget should be 1000.
      */
     int createPlayer(Connection conn, Player person) throws SQLException {
-        System.out.println("Creating player"); //TODO remove
         try {
             String[] countryArea = getRandomCountryArea(conn);
             conn.setAutoCommit(false);
@@ -247,7 +241,7 @@ public class Game {
             st.close();
             return 1;
         } catch (SQLException e) {
-            System.out.println(e); //TODO (maybe) REMOVE
+            System.out.println(e);
             return 0;
         }
     }
@@ -268,9 +262,9 @@ public class Game {
         ResultSet rs = st.executeQuery();
         conn.commit();
         if (!rs.next()) {
-            System.out.println("Person doesn't have any valid moves");
+            System.out.println(person.playername + " doesn't have any valid moves");
         }else {
-            System.out.println(person.playername + "can move to:");
+            System.out.println(person.playername + " can move to:");
             do {
                 System.out.println(rs.getString("destarea") + " in " + rs.getString("destcountry")
                         + " which costs " + rs.getString("cost"));
@@ -305,7 +299,6 @@ public class Game {
      * that is identified by the tuple of personnummer and country.
      */
     void listProperties(Connection conn, String personnummer, String country) throws SQLException {
-        System.out.println("Listing properties"); // TODO REMOVE
         conn.setAutoCommit(false);
         String query = "SELECT * FROM hotels WHERE ownercountry = ? AND ownerpersonnummer = ?";
         PreparedStatement st = conn.prepareStatement(query);
@@ -357,16 +350,13 @@ public class Game {
     /* This function should print the budget, assets and refund values for all players.
      */
     void showScores(Connection conn) throws SQLException {
-        //Not sure if it's better to make one query per player or sorting on the java-side
-        System.out.println("Showing scores"); //TODO remove
         conn.setAutoCommit(false);
-        String query = "SELECT * FROM assetsummary WHERE country <> '' AND personnummer <> ''";
+        String query = "SELECT name, budget, assets, reclaimable FROM assetsummary WHERE country <> '' AND personnummer <> ''";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet rs = st.executeQuery();
         conn.commit();
         while(rs.next()){
-            System.out.println("Player with personnummer: " + rs.getString("personnummer")
-                    + " from country = " + rs.getString("country")
+            System.out.println(rs.getString("personnummer")
                     + " has: \n budget: " + rs.getDouble("budget")
                     + " | assets: " + rs.getString("assets") + " | refund value: "
                     + rs.getDouble("reclaimable") + "\n");
@@ -380,7 +370,6 @@ public class Game {
      */
     int sellRoad(Connection conn, Player person, String area1, String country1, String area2, String country2){
         try {
-            System.out.println("Selling road"); //TODO remove
             conn.setAutoCommit(false);
             String query = "DELETE FROM roads WHERE fromcountry = ? AND fromarea = ? AND tocountry = ? AND toarea = ? AND ownercountry = ? AND ownerpersonnummer = ?";
             PreparedStatement st = conn.prepareStatement(query);
@@ -406,7 +395,6 @@ public class Game {
      */
     int sellHotel(Connection conn, Player person, String city, String country){
         try {
-            System.out.println("Selling hotel"); //TODO remove
             conn.setAutoCommit(false);
             String query = "DELETE FROM hotels WHERE ownercountry = ? AND ownerpersonnummer = ? AND locationcountry = ? AND locationname = ?";
             PreparedStatement st = conn.prepareStatement(query);
@@ -430,7 +418,6 @@ public class Game {
      */
     int buyRoad(Connection conn, Player person, String area1, String country1, String area2, String country2) {
         try {
-            System.out.println("Buying road"); //TODO remove
             conn.setAutoCommit(false);
             String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
             PreparedStatement st = conn.prepareStatement(query);
@@ -457,7 +444,6 @@ public class Game {
      */
     int buyHotel(Connection conn, Player person, String name, String city, String country){
         try {
-            System.out.println("Buying hotel"); //TODO remove
             conn.setAutoCommit(false);
             String query = "INSERT INTO hotels VALUES (?,?,?,?,?)";
             PreparedStatement st = conn.prepareStatement(query);
@@ -482,7 +468,6 @@ public class Game {
      */
     int changeLocation(Connection conn, Player person, String area, String country) throws SQLException {
         try {
-            System.out.println("Moving person"); //TODO remove
             conn.setAutoCommit(false);
             String query = "UPDATE persons SET locationarea = ?, locationcountry = ? WHERE country = ? AND personnummer = ?";
             PreparedStatement st = conn.prepareStatement(query);
@@ -503,7 +488,6 @@ public class Game {
     /* This function should add the visitbonus of 1000 to a random city
       */
     void setVisitingBonus(Connection conn) throws SQLException {
-        System.out.println("Setting visitbonus"); //TODO remove
         String[] countryArea = getRandomCountryArea(conn);
         conn.setAutoCommit(false);
         String query = "UPDATE cities SET visitbonus = ? WHERE country = ? AND name = ?";
@@ -520,13 +504,12 @@ public class Game {
       */
     void announceWinner(Connection conn) throws SQLException {
         conn.setAutoCommit(false);
-        String query = "SELECT personnummer, country, budget FROM persons ORDER BY budget DESC LIMIT 1";
+        String query = "SELECT name, budget FROM persons ORDER BY budget DESC LIMIT 1";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet rs = st.executeQuery();
         conn.commit();
         rs.next();
-        System.out.println("The winner is the player with personnummer: " + rs.getString("personnummer") + " from " + rs.getString("country")
-                + " with a budget of " + rs.getString("budget"));
+        System.out.println("The winner is " + rs.getString("name") + " with a budget of " + rs.getString("budget"));
     }
 
     void play (String worldfile) throws IOException {
@@ -562,10 +545,6 @@ public class Game {
             props.setProperty("password",PASSWORD);
 
             final Connection conn = DriverManager.getConnection(url, props);
-
-
-            //TODO REMOVE! ONLY FOR TESTING!
-            clearOldTable(conn);
 
 			/* This block creates the government entry and the necessary
 			 * country and area for that.
@@ -760,14 +739,4 @@ public class Game {
         g.play(worldfile);
     }
 
-
-    //TODO REMOVE, only for debug
-    void clearOldTable(Connection conn) throws  SQLException{
-        conn.setAutoCommit(false);
-        String query = "TRUNCATE countries CASCADE";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.executeUpdate();
-        st.close();
-        conn.commit();
-    }
 }
