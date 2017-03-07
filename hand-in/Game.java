@@ -453,8 +453,15 @@ public class Game {
     int buyRoad(Connection conn, Player person, String area1, String country1, String area2, String country2) throws SQLException {
         String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
         PreparedStatement st = conn.prepareStatement(query);
+        String roadTaxQuery = "SELECT value FROM constants WHERE name = roadtax";
+        PreparedStatement roadTaxSt = conn.prepareStatement(roadTaxQuery);
         try {
             conn.setAutoCommit(false);
+
+            ResultSet roadTaxRS = roadTaxSt.executeQuery();
+            roadTaxRS.next();
+            double roadTax = roadTaxRS.getDouble("value");
+            roadTaxSt.close();
 
             st.setString(1, country1);
             st.setString(2, area1);
@@ -462,7 +469,7 @@ public class Game {
             st.setString(4, area2);
             st.setString(5, person.country);
             st.setString(6, person.personnummer);
-            st.setDouble(7, 13.5); //TODO what is the roadtax supposed to be even?
+            st.setDouble(7, roadTax);
             st.executeUpdate();
             conn.commit();
             st.close();
@@ -470,6 +477,7 @@ public class Game {
         }catch (SQLException e){
             System.out.println(e);
             st.close();
+            roadTaxSt.close();
             return 0;
         }
     }

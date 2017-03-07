@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c4f8a51-9ecb-4641-ac8b-0c5ead1ac2d8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game.java" afterPath="$PROJECT_DIR$/src/Game.java" />
-    </list>
+    <list default="true" id="4c4f8a51-9ecb-4641-ac8b-0c5ead1ac2d8" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +22,8 @@
       <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8316">
-              <caret line="454" column="48" lean-forward="false" selection-start-line="454" selection-start-column="48" selection-end-line="454" selection-end-column="48" />
+            <state relative-caret-position="726">
+              <caret line="97" column="33" lean-forward="true" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="33" />
               <folding>
                 <element signature="e#1238#1239#0" expanded="true" />
                 <element signature="e#1281#1282#0" expanded="true" />
@@ -493,8 +491,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8316">
-          <caret line="454" column="48" lean-forward="false" selection-start-line="454" selection-start-column="48" selection-end-line="454" selection-end-column="48" />
+        <state relative-caret-position="726">
+          <caret line="97" column="33" lean-forward="true" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="33" />
           <folding>
             <element signature="e#1238#1239#0" expanded="true" />
             <element signature="e#1281#1282#0" expanded="true" />
