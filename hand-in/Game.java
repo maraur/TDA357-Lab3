@@ -71,7 +71,7 @@ public class Game {
       * should try to insert an area and a town (and possibly also a country)
       * for the given attributes.
       */
-    void insertTown(Connection conn, String name, String country, String population) throws SQLException {
+    void insertTown(Connection conn, String country, String name, String population) throws SQLException {
         insertCountry(conn, country);
         insertArea(conn, name, country, population);
         conn.setAutoCommit(false);
@@ -89,7 +89,7 @@ public class Game {
       * for the given attributes.
       * The city visitbonus should be set to 0.
       */
-    void insertCity(Connection conn, String name,  String country, String population) throws SQLException {
+    void insertCity(Connection conn, String country, String name, String population) throws SQLException {
         insertCountry(conn, country);
         insertArea(conn, name, country, population);
         conn.setAutoCommit(false);
@@ -154,7 +154,7 @@ public class Game {
       * should try to insert a government owned road with tax 0
       * between these two areas.
       */
-    void insertRoad(Connection conn, String area1, String country1, String area2, String country2) throws SQLException {
+    void insertRoad(Connection conn, String country1, String area1, String country2, String area2) throws SQLException {
         conn.setAutoCommit(false);
         String query = "INSERT INTO roads VALUES (?,?,?,?,?,?,?)";
         PreparedStatement st = conn.prepareStatement(query);

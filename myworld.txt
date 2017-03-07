@@ -1,0 +1,107 @@
+CITY Gothenburg Sweden 541100
+
+CITY Stockholm Sweden 912000
+
+CITY Malmo Sweden 318100
+
+CITY Lund Sweden 116000
+
+TOWN Karlstad Sweden 88400
+
+TOWN Halmstad Sweden 95500
+
+TOWN Falun Sweden 56900
+
+TOWN Varberg Sweden 60400
+
+TOWN Uddevalla Sweden 53500
+
+TOWN Kalmar Sweden 64700
+
+CITY Berlin Germany 3421800
+
+CITY Munich Germany 1407800
+
+CITY Cologne Germany 1034200
+
+CITY Hamburg Germany 1746300
+
+CITY Kiel Germany 241500
+
+CITY Rostock Germany 203400
+
+CITY Copenhagen Denmark 1263700
+
+CITY Odense Denmark 173800
+
+CITY Aalborg Denmark 110500
+
+TOWN Viborg Denmark 39200
+
+TOWN Slagelse Denmark 32300
+
+CITY Helsinki Finland 626300
+
+CITY Espoo Finland 267900
+
+CITY Oulu Finland 196800
+
+CITY Lahti Finland 103700
+
+TOWN Kemi Finland 21800
+
+TOWN Hollola Finland 21900
+
+CITY Oslo Norway 647700
+
+CITY Trondheim Norway 185000
+
+TOWN Kristiansand Norway 87400
+
+TOWN Grimstad Norway 22100
+
+TOWN Sola Norway 25700
+
+CITY Rome Italy 2872000
+
+CITY Turin Italy 896800
+
+CITY Bolzano Italy 106100
+
+TOWN Como Italy 84700
+
+TOWN Lucca Italy 89300
+
+ROAD Gothenburg Sweden Stockholm Sweden
+
+ROAD Lund Sweden Malmo Sweden
+
+ROAD Gothenburg Sweden Malmo Sweden
+
+ROAD Karlstad Sweden Halmstad Sweden
+
+ROAD Berlin Germany Hamburg Germany
+
+ROAD Helsinki Finland Espoo Finland
+
+ROAD Kiel Germany Rostock Germany
+
+ROAD Rostock Germany Lund Sweden
+
+ROAD Rome Italy Bolzano Italy
+
+ROAD Munich Germany Bolzano Italy
+
+ROAD Como Italy Lucca Italy
+
+ROAD Gothenburg Sweden Oslo Norway
+
+ROAD Hamburg Germany Kiel Germany
+
+ROAD Stockholm Sweden Falun Sweden
+
+ROAD Malmo Sweden Copenhagen Denmark
+
+ROAD Copenhagen Denmark Odense Denmark
+
+ROAD Copenhagen Denmark Viborg Denmark
